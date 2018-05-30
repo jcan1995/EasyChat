@@ -11,6 +11,7 @@ export default class LoginPage extends Component {
   };
 
   onRegisterButtonPress(){
+    this.setState({error:''});
     this.props.navigation.navigate('Register')
   }
 
@@ -72,7 +73,7 @@ export default class LoginPage extends Component {
             onChangeText={password => this.setState({ password })}
           />
         </CardSection>
-        
+
         <Text style={styles.errorTextStyle}>
           {this.state.error}
         </Text>
