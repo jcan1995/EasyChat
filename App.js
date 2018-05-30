@@ -20,16 +20,12 @@ export default class App extends React.Component {
 
   componentWillMount(){
     firebase.initializeApp({
-      apiKey: "AIzaSyCXKvA_p5UGoYkRMqlEBCKzhnqzVIxMYrU",
-      authDomain: "chatroom-317fa.firebaseapp.com",
-      databaseURL: "https://chatroom-317fa.firebaseio.com",
-      projectId: "chatroom-317fa",
-      storageBucket: "chatroom-317fa.appspot.com",
-      messagingSenderId: "200870960380"
+    /*Todo: Properly/safely insert API key*/
     });
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
         this.setState({loggedIn: true});
+
       }else {
         this.setState({loggedIn: false});
       }
@@ -39,6 +35,7 @@ export default class App extends React.Component {
   render() {
     return (
       <RootStack />
+
     );
   }
 }
