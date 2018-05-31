@@ -4,11 +4,41 @@ import { Card, CardSection, Input, Button, Spinner } from './common';
 import firebase from 'firebase';
 
 export default class LoginPage extends Component {
-  state = { email: '', password: '', error: '', loading: false };
+  state = { email: '', password: '', error: '', loading: false, loggedIn: null };
 
   static navigationOptions = {
     title: 'Login'
   };
+
+  constructor(props){
+    super(props);
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user) {
+        this.setState({loggedIn: true});
+
+      }else {
+        this.setState({loggedIn: false});
+      }
+    });
+  }
+
+
+  componentWillMount(){
+
+    switch(this.state.loggedIn){
+      case true:
+        this.props.navigation.navigate('Home')
+        break;
+      case false:
+        this.props.navigation.navigate('Login')
+        break;
+      default:
+        <Spinner size="large" />;
+        break;
+    }
+  }
+
+
 
   onRegisterButtonPress(){
     this.setState({error:''});

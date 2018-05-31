@@ -28,14 +28,14 @@ export default class App extends React.Component {
       messagingSenderId: "200870960380"
     });
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        this.setState({loggedIn: true});
-
-      }else {
-        this.setState({loggedIn: false});
-      }
-    });
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if(user) {
+    //     this.setState({loggedIn: true});
+    //
+    //   }else {
+    //     this.setState({loggedIn: false});
+    //   }
+    // });
   }
 
   render() {
