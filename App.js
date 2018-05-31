@@ -20,8 +20,14 @@ export default class App extends React.Component {
 
   componentWillMount(){
     firebase.initializeApp({
-    /*Todo: Properly/safely insert API key*/
+      apiKey: "AIzaSyCXKvA_p5UGoYkRMqlEBCKzhnqzVIxMYrU",
+      authDomain: "chatroom-317fa.firebaseapp.com",
+      databaseURL: "https://chatroom-317fa.firebaseio.com",
+      projectId: "chatroom-317fa",
+      storageBucket: "chatroom-317fa.appspot.com",
+      messagingSenderId: "200870960380"
     });
+
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
         this.setState({loggedIn: true});

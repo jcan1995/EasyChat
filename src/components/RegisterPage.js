@@ -14,18 +14,28 @@ export default class RegisterPage extends Component {
   onRegisterButtonPress(){
     /*Create account with Firebase*/
     const { email, password, confirmPassword } = this.state;
-    this.setState({loading: true});
-    if(password == confirmPassword){
+
+    this.setState({error: '', loading: true});
+
+    if(password === confirmPassword){
       firebase.auth().createUserWithEmailAndPassword(email,password)
-      .then(this.onRegisterSuccess.bind(this))
-      .catch(this.onRegisterFail.bind(this));
+        .then(this.onRegisterSuccess.bind(this))
+        // .catch(this.onRegisterFail.bind(this));
+        .catch(this.onRegisterFail.bind(this));
     }else{
-      this.setState({error:'Passwords do not match.'})
+      this.setState({error:'Passwords do not match.', loading: false})
     }
   }
   onRegisterSuccess(){
-    
+
     /*Todo: Create user instance in firebase DB*/
+    var database = firebase.database();
+    // var newKey = database.ref('users/').push().key;
+    const { email, username } = this.state;
+    database.ref('users/' + username).set({
+      email: email,
+      username: username
+    });
 
     /*Go back to home*/
     this.setState({
@@ -48,7 +58,7 @@ export default class RegisterPage extends Component {
     }
     return (
       <Button onPress={this.onRegisterButtonPress.bind(this)}>
-        Log in
+        Register
       </Button>
     );
   }
