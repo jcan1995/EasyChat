@@ -14,8 +14,6 @@ const ChatRoomDetail = ({ username }) => {
     </Card>
 
   );
-
-
 }
 
 const styles = StyleSheet.create({
