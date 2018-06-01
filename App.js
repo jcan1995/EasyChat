@@ -8,9 +8,9 @@ import { createStackNavigator } from 'react-navigation';
 import firebase from 'firebase';
 
 const RootStack = createStackNavigator({
-  Login: LoginPage,
-  Register: RegisterPage,
   Home: HomePage,
+  Login: LoginPage,
+  Register: RegisterPage
 
 });
 
@@ -52,5 +52,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });

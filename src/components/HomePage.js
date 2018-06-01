@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
-import {View} from 'react-native';
+import { StyleSheet, ScrollView, View} from 'react-native';
+import ChatRoomDetail from './ChatRoomDetail';
 
 export default class HomePage extends Component {
+
   static navigationOptions = {
     title: 'Home',
     headerLeft: null
   };
 
+  componentWillMount(){
+
+  }
+
   render(){
+
+    var names = ['joshua', 'vinh', 'romnie'];
+
     return(
-      <View>
-      </View>
+      <ScrollView>
+        {
+          names.map((item, key)=>(<ChatRoomDetail key={key} username={item}/>))
+        }
+      </ScrollView>
     );
   }
 }
