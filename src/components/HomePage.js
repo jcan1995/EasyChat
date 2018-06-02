@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Text, Button, StyleSheet, ScrollView, View} from 'react-native';
+import { Text, StyleSheet, ScrollView, View} from 'react-native';
 import ChatRoomDetail from './ChatRoomDetail';
+import { Button } from './common';
 
 export default class HomePage extends Component {
 
   static navigationOptions = {
-    title: 'Home',
+    title: 'Chats',
     headerLeft: null
   };
 
@@ -34,12 +35,10 @@ export default class HomePage extends Component {
           </ScrollView>
         </View>
 
-        <View>
-          <Button
-            onPress= {this.onNewChatPressed.bind(this)}
-            title='New Chat'
-            color="#841584"
-          />
+        <View style={styles.containerStyle}>
+          <Button onPress= {this.onNewChatPressed.bind(this)}>
+            New Chat
+          </Button>
         </View>
 
 
@@ -50,6 +49,15 @@ export default class HomePage extends Component {
   }
 }
 const styles = {
+  containerStyle: {
+		borderBottomWidth: 1,
+		padding: 5,
+		backgroundColor: '#fff',
+		justifyContent: 'flex-start',
+		flexDirection: 'row',
+		borderColor: '#ddd',
+		position: 'relative'
+	},
   textStyle: {
 		alignSelf: 'center',
 		color: '#007aff',
