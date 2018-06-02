@@ -6,24 +6,30 @@ import ChatRoomDetail from './ChatRoomDetail';
 
 
 export default class UserLookUp extends Component {
-  state = { username: '', searching: false, users: []};
+  state = { username: '', searching: false, users: [], error: ''};
 
   searchUsers(){
+    this.setState({error:''})
+
     console.log("In searchUsers");
 
-    this.setState({searching:true});
-    this.setState({users: []});
+    if(this.state.username){
+      this.setState({searching:true});
+      this.setState({users: []});
 
-    const { username } = this.state;
+      const { username } = this.state;
 
-    firebase.database().ref('/users/' + username)
-      .once('value')
-      .then((snapshot) => {
-        this.setState({users: this.state.users.concat(snapshot.val().username)});
-        this.setState({searching: false});
-        // console.log("Username: " + snapshot.val().username);
-      });
-
+      firebase.database().ref('/users/' + username)
+        .once('value')
+        .then((snapshot) => {
+          this.setState({users: this.state.users.concat(snapshot.val().username)});
+          this.setState({searching: false});
+          // console.log("Username: " + snapshot.val().username);
+        });
+    }
+    else {
+      this.setState({error:'Enter a username'})
+    }
 
   }
 
@@ -64,6 +70,11 @@ export default class UserLookUp extends Component {
               onChangeText={username => this.setState({ username })}
             />
         </View>
+
+        <View>
+          <Text>{this.state.error}</Text>
+        </View>
+
 
         <View style={styles.containerStyle}>
           {this.renderButton()}
