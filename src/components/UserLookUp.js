@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
-import { Input, Spinner } from './common';
+import { View, Text, ScrollView } from 'react-native';
+import { Input, Spinner, Button } from './common';
+import firebase from 'firebase';
+import ChatRoomDetail from './ChatRoomDetail';
+
 
 export default class UserLookUp extends Component {
-  state = { username: '', searching: false };
+  state = { username: '', searching: false, users: []};
 
   searchUsers(){
+    console.log("In searchUsers");
+
     this.setState({searching:true});
-    console.log('in search users');
+    this.setState({users: []});
+
+    const { username } = this.state;
+
+    firebase.database().ref('/users/' + username)
+      .once('value')
+      .then((snapshot) => {
+        this.setState({users: this.state.users.concat(snapshot.val().username)});
+        this.setState({searching: false});
+        // console.log("Username: " + snapshot.val().username);
+      });
+
+
   }
 
   renderButton(){
@@ -17,14 +34,23 @@ export default class UserLookUp extends Component {
       );
     }
     return (
-      <Button
-        onPress={this.searchUsers.bind(this)}
-        title="Search"
-      />
-
-
+      <Button onPress={this.searchUsers.bind(this)}>
+        Search
+      </Button>
     );
   }
+
+  renderUsers(){
+    if(this.state.users){
+      console.log("Before map function!");
+      return this.state.users.map((item, key)=>(<ChatRoomDetail key={key} username={item}/>))
+    }
+    else {
+      console.log("In else");
+
+    }
+
+}
 
   render() {
     return(
@@ -42,6 +68,13 @@ export default class UserLookUp extends Component {
         <View style={styles.containerStyle}>
           {this.renderButton()}
         </View>
+
+        <View>
+          <ScrollView>
+            {this.renderUsers()}
+          </ScrollView>
+        </View>
+
       </View>
 
     );
