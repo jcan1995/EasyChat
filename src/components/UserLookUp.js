@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableHighlight } from 'react-native';
 import { Input, Spinner, Button } from './common';
 import firebase from 'firebase';
 import ChatRoomDetail from './ChatRoomDetail';
@@ -8,32 +8,27 @@ import ChatRoomDetail from './ChatRoomDetail';
 export default class UserLookUp extends Component {
   state = { username: '', searching: false, user: {}, error: ''};
 
+  onUserPressed(){
+    this.props.navigation.navigate('ChatRoom')
+
+  }
+
   searchUser(){
     this.setState({error:''})
 
-    console.log("In searchUser");
-
     if(this.state.username){
       this.setState({searching:true});
-      // this.setState({users: []});
-
       const { username } = this.state;
 
       firebase.database().ref('/users/' + username)
         .once('value')
         .then((snapshot) => {
-          // this.setState({users: this.state.users.concat(snapshot.val().username)});
-         console.log(snapshot.val());
          this.setState({user:snapshot.val()});
          this.setState({searching: false});
-         console.log("User: " + this.state.user.email);
-
         });
-    }
-    else {
+    }else {
       this.setState({error:'Enter a username'})
     }
-
   }
 
   renderButton(){
@@ -49,24 +44,9 @@ export default class UserLookUp extends Component {
     );
   }
 
-//   renderUsers(){
-//     if(this.state.users){
-//       console.log("Before map function!");
-//       return(
-//         this.state.users.map((item, key)=>(<ChatRoomDetail key={key} username={item}/>))
-//       );
-//     }
-//     else {
-//       console.log("In else");
-//
-//     }
-//
-// }
-
   render() {
     return(
       <View>
-
         <View style={styles.containerStyle}>
           <Input
               placeholder="Enter a username"
@@ -85,15 +65,17 @@ export default class UserLookUp extends Component {
           {this.renderButton()}
         </View>
 
-        <View>
-          <Text>{this.state.user.username}</Text>
-        </View>
+        <TouchableHighlight onPress={this.onUserPressed.bind(this)}>
+          <View>
+            <Text>{this.state.user.username}</Text>
+          </View>
+        </TouchableHighlight>
+
 
       </View>
 
     );
   }
-
 }
 
 const styles = {

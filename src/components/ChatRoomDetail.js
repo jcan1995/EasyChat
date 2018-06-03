@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Card, CardSection } from './common/index';
 
 const ChatRoomDetail = ({ username }) => {

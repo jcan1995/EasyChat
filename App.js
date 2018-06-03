@@ -5,6 +5,8 @@ import LoginPage from './src/components/LoginPage';
 import RegisterPage from './src/components/RegisterPage';
 import HomePage from './src/components/HomePage';
 import UserLookUp from './src/components/UserLookUp'
+import ChatRoomPage from './src/components/ChatRoomPage'
+
 import { createStackNavigator } from 'react-navigation';
 import firebase from 'firebase';
 
@@ -12,7 +14,8 @@ const RootStack = createStackNavigator({
   Home: HomePage,
   Login: LoginPage,
   Register: RegisterPage,
-  UserLookUp: UserLookUp
+  UserLookUp: UserLookUp,
+  ChatRoom: ChatRoomPage
 
 });
 
