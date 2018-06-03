@@ -9,9 +9,9 @@ import { createStackNavigator } from 'react-navigation';
 import firebase from 'firebase';
 
 const RootStack = createStackNavigator({
+  Home: HomePage,
   Login: LoginPage,
   Register: RegisterPage,
-  Home: HomePage,
   UserLookUp: UserLookUp
 
 });

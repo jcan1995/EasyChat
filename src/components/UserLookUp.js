@@ -6,25 +6,28 @@ import ChatRoomDetail from './ChatRoomDetail';
 
 
 export default class UserLookUp extends Component {
-  state = { username: '', searching: false, users: [], error: ''};
+  state = { username: '', searching: false, user: {}, error: ''};
 
-  searchUsers(){
+  searchUser(){
     this.setState({error:''})
 
-    console.log("In searchUsers");
+    console.log("In searchUser");
 
     if(this.state.username){
       this.setState({searching:true});
-      this.setState({users: []});
+      // this.setState({users: []});
 
       const { username } = this.state;
 
       firebase.database().ref('/users/' + username)
         .once('value')
         .then((snapshot) => {
-          this.setState({users: this.state.users.concat(snapshot.val().username)});
-          this.setState({searching: false});
-          // console.log("Username: " + snapshot.val().username);
+          // this.setState({users: this.state.users.concat(snapshot.val().username)});
+         console.log(snapshot.val());
+         this.setState({user:snapshot.val()});
+         this.setState({searching: false});
+         console.log("User: " + this.state.user.email);
+
         });
     }
     else {
@@ -40,23 +43,25 @@ export default class UserLookUp extends Component {
       );
     }
     return (
-      <Button onPress={this.searchUsers.bind(this)}>
+      <Button onPress={this.searchUser.bind(this)}>
         Search
       </Button>
     );
   }
 
-  renderUsers(){
-    if(this.state.users){
-      console.log("Before map function!");
-      return this.state.users.map((item, key)=>(<ChatRoomDetail key={key} username={item}/>))
-    }
-    else {
-      console.log("In else");
-
-    }
-
-}
+//   renderUsers(){
+//     if(this.state.users){
+//       console.log("Before map function!");
+//       return(
+//         this.state.users.map((item, key)=>(<ChatRoomDetail key={key} username={item}/>))
+//       );
+//     }
+//     else {
+//       console.log("In else");
+//
+//     }
+//
+// }
 
   render() {
     return(
@@ -81,9 +86,7 @@ export default class UserLookUp extends Component {
         </View>
 
         <View>
-          <ScrollView>
-            {this.renderUsers()}
-          </ScrollView>
+          <Text>{this.state.user.username}</Text>
         </View>
 
       </View>
